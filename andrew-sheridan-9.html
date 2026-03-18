@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Andy Sheridan — Script Consultancy &amp; Dramaturgy</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0d0d0d;
+  --ink2:#1a1a1a;
+  --paper:#f7f2ea;
+  --paper2:#efe9dd;
+  --accent:#b82d1f;
+  --accent2:#d4382a;
+  --mid:#5a5848;
+  --light:#e2dcd0;
+  --serif:Georgia,'Times New Roman',serif;
+  --mono:'EB Garamond',Georgia,serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--mono);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;background:transparent}
+.nav-logo{font-family:var(--serif);font-weight:700;font-size:1rem;color:var(--paper);text-decoration:none;letter-spacing:.01em}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,242,234,.55);text-decoration:none;transition:color .25s}
+.nav-links a:hover{color:var(--paper)}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:55% 45%;position:relative}
+
+.hero-left{
+  background:var(--ink);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:9rem 4rem 6rem;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-left::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,.015) 60px,rgba(255,255,255,.015) 61px),
+    repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,.015) 60px,rgba(255,255,255,.015) 61px);
+  pointer-events:none;
+}
+
+.hero-left::after{
+  content:'';
+  position:absolute;top:0;right:0;bottom:0;
+  width:3px;
+  background:linear-gradient(to bottom,transparent,var(--accent) 20%,var(--accent) 80%,transparent);
+}
+
+.hero-tag{
+  display:inline-block;
+  font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(247,242,234,.9);
+  border:1px solid rgba(247,242,234,.3);
+  padding:.35rem .8rem;
+  margin-bottom:2.5rem;
+  width:fit-content;
+}
+
+.hero-heading{
+  font-family:var(--serif);
+  font-size:clamp(3rem,5.5vw,5.5rem);
+  font-weight:700;line-height:.92;
+  color:var(--paper);
+  letter-spacing:-.01em;
+}
+.hero-heading em{font-style:italic;color:var(--accent2)}
+
+.hero-right{
+  background:var(--paper);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:9rem 3.5rem 6rem 3rem;
+  border-left:none;
+  position:relative;
+}
+
+.hero-right::before{
+  content:'';
+  position:absolute;top:15%;left:0;
+  width:1px;height:40%;
+  background:linear-gradient(to bottom,transparent,var(--light),transparent);
+}
+
+.hero-sub{
+  font-size:1rem;line-height:2;
+  color:var(--mid);max-width:34ch;
+  margin-bottom:3rem;
+  text-align:justify;
+}
+
+.hero-sub strong{color:var(--ink);font-weight:400;font-style:italic;font-family:var(--serif)}
+
+.btn{
+  display:inline-flex;align-items:center;gap:.7rem;
+  background:var(--accent);color:#fff;
+  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  text-decoration:none;padding:.95rem 1.8rem;
+  transition:background .2s,transform .2s,gap .2s;
+  width:fit-content;border:none;cursor:pointer;font-family:var(--mono);
+}
+.btn::after{content:'→';transition:transform .2s}
+.btn:hover{background:var(--ink);transform:translateY(-2px)}
+.btn:hover::after{transform:translateX(4px)}
+.btn-form{display:inline-block}
+.btn-form::after{content:''}
+.btn-form:hover{background:var(--paper2);color:var(--ink)}
+
+/* MARQUEE */
+.mq-wrap{background:var(--accent);overflow:hidden;padding:.75rem 0;white-space:nowrap;position:relative}
+.mq-wrap::before,.mq-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2}
+.mq-wrap::before{left:0;background:linear-gradient(to right,var(--accent),transparent)}
+.mq-wrap::after{right:0;background:linear-gradient(to left,var(--accent),transparent)}
+.mq-track{display:inline-flex;animation:marquee 28s linear infinite}
+.mq-item{font-family:var(--serif);font-style:italic;font-size:.9rem;color:rgba(255,255,255,.9);padding:0 2rem;letter-spacing:.02em}
+.mq-dot{font-style:normal;opacity:.5;margin-left:2rem}
+
+/* SHARED */
+section{padding:7rem 0}
+.container{max-width:1140px;margin:0 auto;padding:0 3.5rem}
+
+.section-label{
+  font-size:.58rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.section-label::before{content:'';width:28px;height:1px;background:var(--accent);flex-shrink:0}
+
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(2rem,3.8vw,3.4rem);
+  font-weight:700;line-height:1.04;
+  margin-bottom:3.5rem;
+  letter-spacing:-.01em;
+}
+.section-title em{font-style:italic;color:var(--accent)}
+
+/* SERVICES */
+#services{background:var(--ink2);color:var(--paper);position:relative;overflow:hidden}
+
+#services::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(255,255,255,.012) 80px,rgba(255,255,255,.012) 81px);
+  pointer-events:none;
+}
+
+#services .section-title{color:var(--paper)}
+#services .section-label{color:var(--accent2)}
+#services .section-label::before{background:var(--accent2)}
+
+.services-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  border:1px solid rgba(247,242,234,.08);
+}
+
+.service-card{
+  padding:3rem 2.8rem;
+  border-right:1px solid rgba(247,242,234,.08);
+  border-bottom:1px solid rgba(247,242,234,.08);
+  transition:background .35s;
+  position:relative;overflow:hidden;
+}
+.service-card:nth-child(2n){border-right:none}
+.service-card:nth-child(3),.service-card:nth-child(4){border-bottom:none}
+
+.service-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(to right,var(--accent),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s ease;
+}
+.service-card:hover{background:rgba(255,255,255,.03)}
+.service-card:hover::before{transform:scaleX(1)}
+
+.service-number{
+  font-size:.58rem;letter-spacing:.25em;
+  color:rgba(180,45,31,.7);
+  margin-bottom:2rem;
+  font-family:var(--mono);
+}
+
+.service-name{
+  font-family:var(--serif);
+  font-size:1.45rem;font-weight:700;line-height:1.15;
+  color:var(--paper);margin-bottom:1.2rem;
+}
+.service-name em{font-style:normal;color:rgba(247,242,234,.92)}
+
+.service-desc{font-size:.95rem;line-height:1.95;color:rgba(247,242,234,.92);text-align:justify;font-style:normal}
+
+.service-ideal{
+  font-size:.88rem;line-height:1.75;
+  color:rgba(247,242,234,.92);
+  font-style:normal;margin-top:1.1rem;padding-top:1.1rem;text-align:justify;
+  border-top:1px solid rgba(247,242,234,.07);
+}
+
+.service-price{
+  margin-top:1.6rem;
+  font-family:var(--serif);font-size:1.3rem;font-weight:700;
+  color:var(--accent2);
+  display:flex;align-items:baseline;gap:.4rem;
+}
+
+/* ABOUT */
+#about{background:var(--paper);position:relative}
+
+#about::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(to right,var(--accent) 0%,transparent 60%);
+}
+
+.about-inner{max-width:760px}
+
+.about-body{
+  font-size:1rem;line-height:2.05;
+  color:var(--mid);margin-bottom:1.4rem;
+  text-align:justify;
+}
+.about-body em{font-style:italic;color:var(--ink)}
+
+.credentials{
+  margin-top:2.5rem;
+  border-top:1px solid var(--light);
+}
+
+.credential{
+  display:grid;
+  grid-template-columns:70px 1fr;
+  gap:1.5rem;
+  padding:1rem 0;
+  border-bottom:1px solid var(--light);
+  align-items:center;
+  transition:background .2s;
+}
+.credential:last-child{border-bottom:none}
+
+.cred-year{
+  font-size:.58rem;letter-spacing:.12em;
+  color:var(--accent);
+  font-family:var(--mono);
+  text-transform:uppercase;
+}
+
+.cred-text{
+  font-size:.92rem;color:var(--mid);line-height:1.5;
+}
+.cred-text em{font-style:italic;color:var(--ink)}
+
+/* CONTACT */
+#contact{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+
+#contact::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(255,255,255,.01) 80px,rgba(255,255,255,.01) 81px);
+  pointer-events:none;
+}
+
+#contact .section-title{color:var(--paper)}
+
+.contact-layout{display:grid;grid-template-columns:1fr 1.7fr;gap:6rem;align-items:start}
+
+.contact-intro{font-size:1rem;line-height:2;color:rgba(247,242,234,.92);margin-bottom:3rem;text-align:justify;font-style:normal}
+
+.contact-meta{margin-bottom:2rem}
+.contact-detail{font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,242,234,.28);margin-bottom:.4rem}
+.contact-value{font-family:var(--serif);font-size:1rem;color:rgba(247,242,234,.85);display:block;margin-bottom:2rem;text-decoration:none;transition:color .2s}
+.contact-value:hover{color:var(--accent2)}
+
+.contact-form{display:flex;flex-direction:column;gap:1.6rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
+.field{display:flex;flex-direction:column;gap:.5rem}
+.field label{font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(247,242,234,.85)}
+.field input,.field select,.field textarea{
+  background:transparent;border:none;
+  border-bottom:1px solid rgba(247,242,234,.12);
+  padding:.7rem 0;color:var(--paper);
+  font-family:var(--mono);font-size:1rem;
+  outline:none;transition:border-color .25s;width:100%;
+}
+.field input::placeholder,.field textarea::placeholder{color:rgba(247,242,234,.2)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent2)}
+.field select option{background:#1a1a1a;color:var(--paper)}
+.field textarea{resize:none;height:100px}
+#form-confirm{font-size:.72rem;color:var(--accent2);display:none;margin-top:.5rem;letter-spacing:.05em}
+
+/* FOOTER */
+footer{
+  background:#080808;
+  padding:2rem 3.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  color:rgba(247,242,234,.15);
+  font-size:.58rem;letter-spacing:.12em;
+  border-top:1px solid rgba(247,242,234,.04);
+}
+
+/* ANIMATIONS */
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  #hero{grid-template-columns:1fr}
+  .hero-left{min-height:55vh;padding-top:8rem}
+  .hero-left::after{display:none}
+  nav .nav-logo{color:var(--ink)}
+  nav .nav-links a{color:rgba(0,0,0,.5)}
+  .services-grid,.contact-layout{grid-template-columns:1fr}
+  .service-card,.service-card:nth-child(2n),.service-card:nth-child(3),.service-card:nth-child(4){
+    border-right:none;border-bottom:1px solid rgba(247,242,234,.08)
+  }
+  .service-card:last-child{border-bottom:none}
+  .contact-layout{gap:3rem}
+  .form-row{grid-template-columns:1fr}
+  nav{padding:1rem 1.5rem}
+  .container{padding:0 1.5rem}
+  section{padding:5rem 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">Andy Sheridan</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Script Consultancy &amp; Dramaturgy</span>
+    <h1 class="hero-heading">Stories<br/>worth<br/><em>telling.</em></h1>
+  </div>
+  <div class="hero-right">
+    <p class="hero-sub">Rigorous dramaturgical support for writers who want to go further. From early development to final draft &mdash; <strong>your story in sharper focus.</strong></p>
+    <a href="#contact" class="btn">Book a Consultation</a>
+  </div>
+</section>
+
+<div class="mq-wrap" aria-hidden="true">
+  <div class="mq-track">
+    <span class="mq-item">Script Development</span><span class="mq-dot">·</span>
+    <span class="mq-item">Story Structure</span><span class="mq-dot">·</span>
+    <span class="mq-item">Character Depth</span><span class="mq-dot">·</span>
+    <span class="mq-item">Dramaturgy</span><span class="mq-dot">·</span>
+    <span class="mq-item">Page-by-Page Notes</span><span class="mq-dot">·</span>
+    <span class="mq-item">Production Support</span><span class="mq-dot">·</span>
+    <span class="mq-item">Script Development</span><span class="mq-dot">·</span>
+    <span class="mq-item">Story Structure</span><span class="mq-dot">·</span>
+    <span class="mq-item">Character Depth</span><span class="mq-dot">·</span>
+    <span class="mq-item">Dramaturgy</span><span class="mq-dot">·</span>
+    <span class="mq-item">Page-by-Page Notes</span><span class="mq-dot">·</span>
+    <span class="mq-item">Production Support</span><span class="mq-dot">·</span>
+  </div>
+</div>
+
+<section id="services">
+  <div class="container">
+    <p class="section-label">What I offer</p>
+    <h2 class="section-title">Work that<br/><em>transforms the page.</em></h2>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <p class="service-number">01</p>
+        <h3 class="service-name">The &ldquo;Cold Read&rdquo;<br/><em>Script Report</em></h3>
+        <p class="service-desc">A thorough read of a full-length play followed by a 2&ndash;3 page written report. Focuses on structure, character arcs, and thematic clarity.</p>
+        <p class="service-ideal">Ideal for writers with a completed first or second draft seeking professional macro feedback.</p>
+        <p class="service-price">&pound;350</p>
+      </div>
+
+      <div class="service-card">
+        <p class="service-number">02</p>
+        <h3 class="service-name">The &ldquo;Deep Dive&rdquo;<br/><em>Development Package</em></h3>
+        <p class="service-desc">Three intensive 90-minute 1-on-1 sessions. Includes detailed page-by-page notes on one draft, a follow-up session to discuss rewrites, and a final review of the polished script.</p>
+        <p class="service-ideal">Ideal for writers preparing for a specific submission or production.</p>
+        <p class="service-price">From &pound;750</p>
+      </div>
+
+      <div class="service-card">
+        <p class="service-number">03</p>
+        <h3 class="service-name">The &ldquo;Spark&rdquo;<br/><em>Consultation</em></h3>
+        <p class="service-desc">A one-off 60-minute Zoom or in-person meeting to troubleshoot a specific block or brainstorm a new concept. No written report included.</p>
+        <p class="service-ideal">Ideal for early-stage ideas or writers stuck on a specific plot point.</p>
+        <p class="service-price">&pound;125</p>
+      </div>
+
+      <div class="service-card">
+        <p class="service-number">04</p>
+        <h3 class="service-name">Bespoke<br/><em>Production Dramaturgy</em></h3>
+        <p class="service-desc">Joining a creative team for a rehearsal period. Includes attending rehearsals, providing research actor packets, and advising the director throughout the process.</p>
+        <p class="service-ideal">Ideal for companies seeking dedicated dramaturgical support in the room.</p>
+        <p class="service-price">POA</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="about-inner">
+      <p class="section-label">About</p>
+      <h2 class="section-title">Writer<br/>Actor<br/>Dramaturg<br/><em>in your corner.</em></h2>
+      <p class="about-body">Andy Sheridan is a celebrated Northern voice whose work spans the stage, screen, and radio. After winning the Bruntwood Prize for his debut play <em>Winterlong</em> and receiving the Tom Erhardt Award for emerging writers, Andy has become a mainstay of British theatre. His 2020 adaptation of <em>Wuthering Heights</em> opened to critical and popular acclaim at Manchester&rsquo;s Royal Exchange, cementing his reputation as a master of both original and adapted narrative structures.</p>
+      <p class="about-body">With a CV that includes roles in <em>Industry</em>, <em>Control</em>, and <em>Shameless</em>, Andy knows exactly what makes a script &ldquo;shootable&rdquo; and &ldquo;performable&rdquo;. Having also served as a Script Reader across all stages of the Bruntwood Prize &mdash; reading and reporting on thousands of entries since his own winning submission &mdash; he brings a rare dual perspective to his dramaturg practice: the instincts of a working writer and actor, and the forensic eye of someone who has seen what separates a good script from a great one. He is dedicated to telling untold stories with imagination and clarity.</p>
+      <div class="credentials">
+        <div class="credential">
+          <span class="cred-year">2006</span>
+          <span class="cred-text">Bruntwood Prize &mdash; <em>Winterlong</em></span>
+        </div>
+        <div class="credential">
+          <span class="cred-year">2006&ndash;</span>
+          <span class="cred-text">Script Reader, all stages &mdash; Bruntwood Prize</span>
+        </div>
+        <div class="credential">
+          <span class="cred-year">2006</span>
+          <span class="cred-text">Tom Erhardt Award for Emerging Writers</span>
+        </div>
+        <div class="credential">
+          <span class="cred-year">2020</span>
+          <span class="cred-text"><em>Wuthering Heights</em> &mdash; Royal Exchange, Manchester</span>
+        </div>
+        <div class="credential">
+          <span class="cred-year">Screen</span>
+          <span class="cred-text"><em>Industry</em>, <em>Control</em>, <em>Shameless</em></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-layout">
+      <div>
+        <p class="section-label">Get in touch</p>
+        <h2 class="section-title">Let&rsquo;s talk<br/><em>about your work.</em></h2>
+        <p class="contact-intro">Whether you have a finished draft or a half-formed idea, I&rsquo;d love to hear about it. Use the form to introduce yourself and your project &mdash; I&rsquo;ll be in touch within a few days.</p>
+        <p class="contact-detail">Email</p>
+        <a class="contact-value" href="/cdn-cgi/l/email-protection#066b746768627f756e63746f62676846616b676f6a2865696b"><span class="__cf_email__" data-cfemail="b2dfc0d3dcd6cbc1dad7c0dbd6d3dcf2d5dfd3dbde9cd1dddf">[email&#160;protected]</span></a>
+        <p class="contact-detail">Based in</p>
+        <span class="contact-value">Manchester, UK</span>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="field">
+            <label for="f-name">Your Name</label>
+            <input type="text" id="f-name" placeholder="Jane Smith" required/>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input type="email" id="f-email" placeholder="jane@example.com" required/>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-service">Service</label>
+          <select id="f-service">
+            <option value="">Select a service&hellip;</option>
+            <option>The &ldquo;Cold Read&rdquo; Script Report &mdash; &pound;350</option>
+            <option>The &ldquo;Deep Dive&rdquo; Development Package &mdash; from &pound;750</option>
+            <option>The &ldquo;Spark&rdquo; Consultation &mdash; &pound;125</option>
+            <option>Bespoke Production Dramaturgy &mdash; POA</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-project">Tell me about your project</label>
+          <textarea id="f-project" placeholder="A short description of your work, where you are in the process, and what you&rsquo;re hoping to get from our work together&hellip;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-form">Send Enquiry &rarr;</button>
+        <p id="form-confirm">Thanks &mdash; I&rsquo;ll be in touch soon.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>&copy; 2026 Andy Sheridan. All rights reserved.</span>
+  <span>Made with intention.</span>
+</footer>
+
+<script data-cfasync="fal
